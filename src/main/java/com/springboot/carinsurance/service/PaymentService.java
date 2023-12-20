@@ -20,4 +20,6 @@ public interface PaymentService //Creating Payment service interface
 
 	public String deletePayment(int id); //method to delete a payment
 
+	public Payment assignCar(int cId, int pId);
+
 }

@@ -25,4 +25,6 @@ public interface InsurancePolicyService //Creating InsurancePolicy service inter
 	//method to delete a policy
 	public String deleteInsurancePolicy(int id);
 
+	public InsurancePolicy assignUser(int uId, int insId);
+
 }

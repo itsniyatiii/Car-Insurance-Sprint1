@@ -2,6 +2,9 @@ package com.springboot.carinsurance.service;
 
 import java.util.List;
 import org.springframework.stereotype.Component;
+
+import com.springboot.carinsurance.config.LoginMesage;
+import com.springboot.carinsurance.dto.LoginDTO;
 import com.springboot.carinsurance.dto.UserDTO;
 import com.springboot.carinsurance.entity.User;
 
@@ -19,6 +22,11 @@ public interface UserService //Creating User service interface
 	public UserDTO updateUser(int id, User user);  //method to update a user
 
 	public String deleteUser(int id);  //method to delete a user
+	
+	public LoginMesage  loginUser(LoginDTO loginDTO);
+	
+	public String addUser(UserDTO userDTO);
 
+	
 	
 }

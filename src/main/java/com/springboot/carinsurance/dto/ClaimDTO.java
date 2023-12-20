@@ -20,6 +20,9 @@ public class ClaimDTO
 {
 	private int claimId;
 	
+	@NotNull(message = "VIN should not be null") 
+	private String VIN;
+	
 	@NotEmpty(message = "claim no should not be empty")  
 	private String claim_no;
 	

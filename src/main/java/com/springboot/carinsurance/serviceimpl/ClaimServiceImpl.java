@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.springboot.carinsurance.converter.ClaimConverter;
 import com.springboot.carinsurance.dao.ClaimRepository;
+import com.springboot.carinsurance.dao.InsurancePolicyRepository;
 import com.springboot.carinsurance.dto.ClaimDTO;
 import com.springboot.carinsurance.entity.Claim;
+import com.springboot.carinsurance.entity.InsurancePolicy;
 import com.springboot.carinsurance.service.ClaimService;
 
 //Creating ClaimServiceImpl class
@@ -18,6 +21,10 @@ public class ClaimServiceImpl implements ClaimService
 
 	@Autowired
 	private ClaimRepository claimRepository;
+	
+	@Autowired
+	private InsurancePolicyRepository insurancePolicyRepository;
+	
 	
 	@Autowired
 	private ClaimConverter claimConverter;
@@ -53,11 +60,23 @@ public class ClaimServiceImpl implements ClaimService
 		return claimConverter.convertToClaimDTO(claim);
 	}
 	
+	@Override
+	public Claim assignInsurancePolicy(int insId, int cId) {
+	InsurancePolicy	ins1=insurancePolicyRepository.findBypolicyId(insId);
+	   Claim c1 = claimRepository.findByclaimId(cId);
+	   c1.setPolicy(ins1);	
+	  return claimRepository.save(c1);
+	    //return converter.convertToCourseDTO(c1);
+	}
+
+	
+	
 	//method to update a claim
 	@Override
 	public ClaimDTO updateClaim(int id, Claim claim) 
-	{
+	{ 
 		Claim c=claimRepository.findByclaimId(id);
+		c.setVIN(claim.getVIN());
 		c.setClaim_no(claim.getClaim_no());
 		c.setClaim_amount(claim.getClaim_amount());
 		c.setStatus(claim.getStatus());

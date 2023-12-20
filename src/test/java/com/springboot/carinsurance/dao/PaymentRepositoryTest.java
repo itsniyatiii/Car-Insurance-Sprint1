@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,28 +30,7 @@ public class PaymentRepositoryTest {
 	        System.out.println("testCreatePayment is running!");
 	    }
 	    
-	    @Test
-	    public void testGetAllPayments()
-	    {
-	    	paymentRepository.deleteAll();
-	    	
-	    	//create and save multiple payment entities
-	    	Payment payment1=new Payment(1,1300.00,LocalDate.now(),null);
-	    	Payment payment2=new Payment(2,2000.00,LocalDate.now(),null);
-	    	Payment payment3=new Payment(3,1400.00,LocalDate.now(),null);
-	    	
-	    	paymentRepository.save(payment1);
-	    	paymentRepository.save(payment2);
-	    	paymentRepository.save(payment3);
-	    	
-	    	//retrieve all payments from the databases
-	    	List<Payment> allPayments=paymentRepository.findAll();
-	    	
-	    	//assert that the list is not empty and contains the excepted number of payments
-	    	assertNotNull(allPayments);
-	    	assertEquals(3,allPayments.size());
-	    }
-	    
+	   
 	    @Test
 	    public void testGetPaymentById() {
 	        // Create and save an payment

@@ -20,5 +20,7 @@ public interface CarService //Creating Car service interface
 	public CarDTO updateCar(int id, Car car); //method to update a car
 
 	public String deleteCar(int id); //method to delete a car
+
+	public Car assignInsurancePolicy(int insId, int cId);
 	
 }

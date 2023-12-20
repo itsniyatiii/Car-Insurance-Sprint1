@@ -19,6 +19,7 @@ public interface ClaimService  //Creating Claim service interface
 
 	public String deleteClaim(int id);  //method to delete a claim
 
+	public Claim assignInsurancePolicy(int insId, int cId);
 	
 	
 }

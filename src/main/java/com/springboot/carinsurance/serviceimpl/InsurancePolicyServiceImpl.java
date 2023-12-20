@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.springboot.carinsurance.converter.InsurancePolicyConverter;
 import com.springboot.carinsurance.dao.InsurancePolicyRepository;
+import com.springboot.carinsurance.dao.UserRepository;
 import com.springboot.carinsurance.dto.InsurancePolicyDTO;
 import com.springboot.carinsurance.entity.InsurancePolicy;
+import com.springboot.carinsurance.entity.User;
 import com.springboot.carinsurance.service.InsurancePolicyService;
 
 //Creating  InsurancePolicyServiceImpl class
@@ -18,6 +20,9 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService
 
 	@Autowired
 	private InsurancePolicyRepository insurancePolicyRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Autowired
 	private InsurancePolicyConverter insurancePolicyConverter;
@@ -52,7 +57,17 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService
 		InsurancePolicy insurancePolicy=insurancePolicyRepository.findBypolicyId(id);
 		return insurancePolicyConverter.convertToInsurancePolicyDTO(insurancePolicy);
 	}
-		
+	
+	
+	@Override
+	public InsurancePolicy assignUser(int uId, int insId) {
+	User u1=userRepository.findByuserId(uId);
+	InsurancePolicy p1 = insurancePolicyRepository.findBypolicyId(insId);
+	   p1.setUser(u1);	
+	  return insurancePolicyRepository.save(p1);
+	   
+	}
+	
 	//method to update a policy
 	@Override
 	public InsurancePolicyDTO updateInsurancePolicy(int id, InsurancePolicy insurancePolicy)
@@ -60,7 +75,7 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService
 		InsurancePolicy ip=insurancePolicyRepository.findBypolicyId(id);
 		ip.setPolicy_no(insurancePolicy.getPolicy_no());
 		ip.setPolicy_type(insurancePolicy.getPolicy_type());
-		ip.setStart_date(insurancePolicy.getStart_date());
+		ip.setDuration_in_months(insurancePolicy.getDuration_in_months());
 		ip.setPremium_amount(insurancePolicy.getPremium_amount());
 		ip.setCoverage_amount(insurancePolicy.getCoverage_amount());
 		ip.setDeductible_amount(insurancePolicy.getDeductible_amount());

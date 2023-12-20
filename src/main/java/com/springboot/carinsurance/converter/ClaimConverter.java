@@ -7,7 +7,7 @@ import com.springboot.carinsurance.entity.Claim;
 
 
 @Component
-public class ClaimConverter //creating Admin converter class 
+public class ClaimConverter //creating Claim converter class 
 {
 
 	//convert from DTO to Entity

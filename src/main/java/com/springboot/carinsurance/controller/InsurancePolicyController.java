@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,8 @@ import com.springboot.carinsurance.service.InsurancePolicyService;
 
 
 @RestController
-@RequestMapping("/api/insurancePolicy")
+@RequestMapping("/api")
+@CrossOrigin(origins="http://localhost:4200")
 public class InsurancePolicyController	//creating InsurancePolicy controller class
 {
 
@@ -29,33 +31,42 @@ public class InsurancePolicyController	//creating InsurancePolicy controller cla
 	@Autowired
 	private InsurancePolicyConverter insurancePolicyConverter;
 	
-	@PostMapping("/createInsurancePolicy")  //post mapping to create a policy
+	@PostMapping("/createPolicy")  //post mapping to create a policy
 	public ResponseEntity<InsurancePolicyDTO> createInsurancePolicy(@RequestBody InsurancePolicyDTO insurancePolicyDTO )
 	{
 		final InsurancePolicy insurancePolicy=insurancePolicyConverter.convertToInsurancePolicyEntity(insurancePolicyDTO);
 		return new ResponseEntity<InsurancePolicyDTO>(insurancePolicyService.createInsurancePolicy(insurancePolicy),HttpStatus.CREATED); 
 	 }
 	
-	@GetMapping("/getAllInsurancePolicies")  //get mapping to retrieve all the policies
+	@GetMapping("/getAllPolicies")  //get mapping to retrieve all the policies
 	public List<InsurancePolicyDTO> getAllInsurancePolicies()
 	{
 		return insurancePolicyService.getAllInsurancePolicies();
 	}
 	
-	@GetMapping("getInsurancePolicyById/{id}")  //get mapping retrieve a policy
+	@GetMapping("getPolicyById/{id}")  //get mapping retrieve a policy
 	public InsurancePolicyDTO getInsurancePolicyById(@PathVariable int id) 
 	{
 		return insurancePolicyService.getInsurancePolicyById(id);
 	}
 	
-	@PutMapping("updateInsurancePolicy/{id}")   //put mapping to update a policy
+	//assign insurancepolicy to user
+			@PostMapping("/policy/assignUser/{uId}/{insId}")
+			public ResponseEntity<InsurancePolicy> assignUser(@PathVariable("uId") int uId,
+						@PathVariable("insId") int insId)
+			{
+				return new ResponseEntity<InsurancePolicy>(insurancePolicyService.assignUser(uId, insId),
+							HttpStatus.CREATED);
+			}
+	
+	@PutMapping("updatePolicy/{id}")   //put mapping to update a policy
 	public InsurancePolicyDTO updateInsurancePolicy( @PathVariable int id,@RequestBody InsurancePolicyDTO insurancePolicyDTO)
 	{
 		final InsurancePolicy insurancePolicy=insurancePolicyConverter.convertToInsurancePolicyEntity(insurancePolicyDTO);
 		return insurancePolicyService.updateInsurancePolicy(id, insurancePolicy);
 	}
 	
-	@DeleteMapping("/deleteInsurancePolicy/{id}")  //delete mapping to delete a policy
+	@DeleteMapping("/deletePolicy/{id}")  //delete mapping to delete a policy
 	public String deleteInsurancePolicy(@PathVariable int id)
 	{
 		return insurancePolicyService.deleteInsurancePolicy(id);

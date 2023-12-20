@@ -2,26 +2,27 @@ package com.springboot.carinsurance;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+//import org.springframework.boot.web.servlet.FilterRegistrationBean;
+//import org.springframework.context.annotation.Bean;
+//
+//import com.springboot.carinsurance.config.JwtFilter;
 
-import com.springboot.carinsurance.config.JwtFilter;
 
-
-@SpringBootApplication
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class CarInsuranceManagementSystemApplication 
 {
 
-	@SuppressWarnings({ "rawtypes"})
-	@Bean
-	public FilterRegistrationBean jwtFilter()
-	{
-		final FilterRegistrationBean registrationBean=new FilterRegistrationBean();
-			registrationBean.setFilter(new JwtFilter());
-		    registrationBean.addUrlPatterns("/api/*");
-			return registrationBean;
+//	@SuppressWarnings({ "rawtypes"}) 
+//	@Bean
+//	public FilterRegistrationBean jwtFilter()
+//	{
+//		final FilterRegistrationBean registrationBean=new FilterRegistrationBean();
+//			registrationBean.setFilter(new JwtFilter());
+//		    registrationBean.addUrlPatterns("/api/*");
+//			return registrationBean;
 	
-	}
+//}
 	public static void main(String[] args) 
 	{
 		SpringApplication.run(CarInsuranceManagementSystemApplication.class, args);

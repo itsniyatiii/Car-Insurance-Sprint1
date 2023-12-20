@@ -2,10 +2,10 @@ package com.springboot.carinsurance.converter;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
-
-
 import com.springboot.carinsurance.dto.UserDTO;
 import com.springboot.carinsurance.entity.User;
+
+
 @Component
 public class UserConverter  //creating User converter class
 {

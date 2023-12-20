@@ -5,8 +5,8 @@ import java.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
 
-import com.springboot.carinsurance.entity.InsurancePolicy;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.springboot.carinsurance.entity.Car;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +24,8 @@ public class PaymentDTO
 	
 	@NotNull(message = "Date should not be null. The expected format is yyyy-MM-dd")
 	private LocalDate payment_date;
-	private InsurancePolicy policy;
+	
+	@JsonIgnoreProperties("payment") 
+	private Car car;
 
 }

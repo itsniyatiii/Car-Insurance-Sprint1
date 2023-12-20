@@ -2,12 +2,10 @@ package com.springboot.carinsurance.dto;
 
 import java.time.LocalDate;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.springboot.carinsurance.entity.InsurancePolicy;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +17,7 @@ public class CarDTO
 {
 	private int carId;
 	
-	@NotBlank(message = "VIN should not be blank")   
+	@NotNull(message = "VIN should not be null")   
 	private String VIN;
 	
 	@NotEmpty(message = "car make should not be empty")   
@@ -28,11 +26,19 @@ public class CarDTO
 	@NotEmpty(message = "car model should not be empty")   
 	private String car_model;
 	
-	@NotNull(message = "Date should not be null. The expected format is yyyy-MM-dd")
-	private LocalDate car_manufacturing_year;
+	@NotEmpty(message = "Date should not be empty")
+	private String car_manufacturing_year;
 	
 	@NotEmpty(message = "registration no should not be empty")  
 	private String car_registration_no;
+	
+	@NotNull(message="issued date should not be null")
+	private LocalDate policy_issued_date;
+	
+	@NotNull(message="end date should not be null")
+	private LocalDate policy_end_date;
+	
 	private InsurancePolicy policy;
+	
 	
 }

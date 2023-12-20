@@ -1,8 +1,5 @@
 package com.springboot.carinsurance.dto;
 
-
-import java.time.LocalDate;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -28,11 +25,8 @@ public class InsurancePolicyDTO
 	@NotBlank(message = "policy type should not be blank")  
 	private String policy_type;
 	
-	@NotNull(message = "Date should not be null. The expected format is yyyy-MM-dd")
-	private LocalDate start_date;
-	
-	@NotNull(message = "Date should not be null. The expected format is yyyy-MM-dd")
-	private LocalDate end_date;
+	@NotNull(message="duration should not be null")
+	private int duration_in_months;
 	
 	@NotNull(message="amount should not be null")
 	private double premium_amount;

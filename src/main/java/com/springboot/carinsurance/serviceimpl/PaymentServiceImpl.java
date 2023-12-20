@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.springboot.carinsurance.converter.PaymentConverter;
+import com.springboot.carinsurance.dao.CarRepository;
 import com.springboot.carinsurance.dao.PaymentRepository;
 import com.springboot.carinsurance.dto.PaymentDTO;
+import com.springboot.carinsurance.entity.Car;
 import com.springboot.carinsurance.entity.Payment;
 import com.springboot.carinsurance.service.PaymentService;
 
@@ -19,6 +21,9 @@ public class PaymentServiceImpl implements PaymentService
 
 	@Autowired
 	private PaymentRepository paymentRepository;
+	
+	@Autowired
+	private CarRepository carRepository;
 	
 	@Autowired
 	private PaymentConverter paymentConverter;
@@ -53,6 +58,16 @@ public class PaymentServiceImpl implements PaymentService
 		Payment payment=paymentRepository.findBypaymentId(id);
 		return paymentConverter.convertToPaymentDTO(payment);
 	}
+	
+	@Override
+	public Payment assignCar(int cId, int pId) {
+	Car	c1=carRepository.findBycarId(cId);
+	   Payment p1 = paymentRepository.findBypaymentId(pId);
+	   p1.setCar(c1);	
+	  return paymentRepository.save(p1);
+	    
+	}
+
 		
 	//method to update a payment
 	@Override
@@ -61,7 +76,7 @@ public class PaymentServiceImpl implements PaymentService
 		Payment p=paymentRepository.findBypaymentId(id);
 		p.setPayment_amount(payment.getPayment_amount());
 		p.setPayment_date(payment.getPayment_date());
-		p.setPolicy(payment.getPolicy());
+		p.setCar(payment.getCar());
 		
 		Payment pp=paymentRepository.save(p);
 		return paymentConverter.convertToPaymentDTO(pp);

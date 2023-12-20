@@ -1,8 +1,6 @@
 package com.springboot.carinsurance.entity;
 
 
-import java.time.LocalDate;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +11,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,11 +36,8 @@ public class InsurancePolicy		//Creating InsurancePolicy class
 	@NotBlank(message = "policy type should not be blank")  
 	private String policy_type;
 	
-	@NotNull(message = "Date should not be null. The expected format is yyyy-MM-dd")
-	private LocalDate start_date;
-	
-	@NotNull(message = "Date should not be null. The expected format is yyyy-MM-dd")
-	private LocalDate end_date;	//Data members
+	@NotNull(message="duration should not be null")
+	private int duration_in_months;
 	
 	@NotNull(message="amount should not be null")
 	private double premium_amount;
@@ -53,6 +50,7 @@ public class InsurancePolicy		//Creating InsurancePolicy class
 	
 	@ManyToOne  //creating a Many-To-One relationship between a Policy and User 
     @JoinColumn(name = "policyholder_id")
+	@JsonIgnoreProperties("insurancePolicy") 
     private User user;	
 
 }

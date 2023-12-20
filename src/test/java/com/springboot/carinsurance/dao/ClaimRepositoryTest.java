@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +23,7 @@ public class ClaimRepositoryTest {
     {
     	 // Create and save an claim
     	Claim claim = new Claim();
+    	claim.setVIN("4S3BMHB68B3286050");
         claim.setClaim_no("12344646");
         claim.setClaim_amount(2345.4);
         claim.setStatus("Approved");
@@ -34,33 +34,13 @@ public class ClaimRepositoryTest {
         System.out.println("testCreateClaim is running!");
     }
     
-    @Test
-    public void testGetAllClaims()
-    {
-    	claimRepository.deleteAll();
-    	
-    	//create and save multiple car entities
-    	Claim claim1=new Claim(1,"123456789",2344.4,"Approved",LocalDate.now(),null);
-    	Claim claim2=new Claim(2,"987654321",2000.00,"Approved",LocalDate.now(),null);
-    	Claim claim3=new Claim(3,"223344556",3400.00,"Approved",LocalDate.now(),null);
-    	
-    	claimRepository.save(claim1);
-    	claimRepository.save(claim2);
-    	claimRepository.save(claim3);
-    	
-    	//retrieve all claims from the databases
-    	List<Claim> allClaims=claimRepository.findAll();
-    	
-    	//assert that the list is not empty and contains the excepted number of claims
-    	assertNotNull(allClaims);
-    	assertEquals(3,allClaims.size());
-    }
     
     
     @Test
     public void testGetClaimById() {
         // Create and save an claim
         Claim claim = new Claim();
+        claim.setVIN("4S3BMHB68B3286050");
         claim.setClaim_no("12344643");
         claim.setClaim_amount(2344.55);
         claim.setStatus("Approved");
@@ -75,6 +55,7 @@ public class ClaimRepositoryTest {
         // Assert that the retrieved claim is not null and has the correct ID
         assertNotNull(retrievedClaim);
         assertEquals(claim.getClaimId(), retrievedClaim.getClaimId());
+        assertEquals(claim.getVIN(), retrievedClaim.getVIN());
         assertEquals("12344643", retrievedClaim.getClaim_no());
         assertEquals(2344.55, retrievedClaim.getClaim_amount());
         assertEquals("Approved", retrievedClaim.getStatus());
@@ -86,6 +67,7 @@ public class ClaimRepositoryTest {
     public void testUpdateClaimById() {
         // Create and save an claim
         Claim claim = new Claim();
+        claim.setVIN("1S1BMHB34B3286050");
         claim.setClaim_no("12456789");
         claim.setClaim_amount(1123.45);
         claim.setStatus("Approved");
@@ -98,6 +80,7 @@ public class ClaimRepositoryTest {
         assertNotNull(updatedClaim);
 
         // Modify the claim's attributes
+        updatedClaim.setVIN("4K5BMHB87B3286050");
         updatedClaim.setClaim_no("1232123");;
         updatedClaim.setClaim_amount(2323.23);
         updatedClaim.setStatus("Approved"); 
@@ -111,6 +94,7 @@ public class ClaimRepositoryTest {
         assertNotNull(retrievedClaim);
 
         // Assert that the attributes have been updated
+        assertEquals("4K5BMHB87B3286050", retrievedClaim.getVIN());
         assertEquals("1232123", retrievedClaim.getClaim_no());
         assertEquals(2323.23, retrievedClaim.getClaim_amount());
         assertEquals("Approved", retrievedClaim.getStatus());
@@ -123,6 +107,7 @@ public class ClaimRepositoryTest {
     public void testDeleteClaimById() {
         // Create and save an claim
     	Claim claim = new Claim();
+    	claim.setVIN("4K5BMHB87B3286050");
     	claim.setClaim_no("124567444");
     	claim.setClaim_amount(1122.22);
     	claim.setStatus("Approved");

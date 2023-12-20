@@ -1,9 +1,11 @@
 package com.springboot.carinsurance.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,14 +14,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.springboot.carinsurance.config.LoginMesage;
 import com.springboot.carinsurance.converter.UserConverter;
+import com.springboot.carinsurance.dto.LoginDTO;
 import com.springboot.carinsurance.dto.UserDTO;
 import com.springboot.carinsurance.entity.User;
 import com.springboot.carinsurance.service.UserService;
 
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api")
+@CrossOrigin(origins="http://localhost:4200")
 public class UserController	//creating User controller class
 {
 	@Autowired
@@ -41,7 +46,7 @@ public class UserController	//creating User controller class
 	{
 		return userService.getAllUsers();
 	}
-	
+			
 	@GetMapping("getUserById/{id}")  //get mapping retrieve a user
 	public UserDTO getUserById(@PathVariable int id) 
 	{
@@ -61,5 +66,18 @@ public class UserController	//creating User controller class
 		return userService.deleteUser(id);
 	}
 	
-
+	@PostMapping(path = "/save/user")
+    public String saveUser(@RequestBody UserDTO userDTO)
+    {
+        String id = userService.addUser(userDTO);
+        return id;
+    }
+ 
+ 
+	@PostMapping(path="/login/user")
+	public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO)
+	{
+		LoginMesage loginResponse = userService.loginUser(loginDTO);
+		return ResponseEntity.ok(loginResponse);
+	}
 }
